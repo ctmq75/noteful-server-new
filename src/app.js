@@ -11,8 +11,8 @@ const fRouter = require('./folders/folders-router.js');
 
 const app = express();
 
-const morganSettings = process.env.NODE_ENV === 'production' ? 'tiny' : 'common'
-app.use(morgan(morganSetting))
+const morganOption = 'tiny'
+app.use(morgan(morganOption))
 app.use(helmet());
 app.use(cors());
 
