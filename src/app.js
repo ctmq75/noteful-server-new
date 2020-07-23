@@ -16,8 +16,8 @@ app.use(morgan((NODE_ENV === 'production') ? 'tiny' : 'common', {
 app.use(helmet());
 app.use(cors());
 
-app.use('/notes', nRouter);
-app.use('/folders', fRouter);
+app.use('/api/notes', nRouter);
+app.use('/api/folders', fRouter);
 
 app.get('/', (req, res) => {
   res.send('Hello, noteful users!');
