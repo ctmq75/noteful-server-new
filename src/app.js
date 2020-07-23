@@ -12,21 +12,11 @@ const fRouter = require('./folders/folders-router.js');
 const app = express();
 
 
-var whitelist = ['http://localhost:3000', 'https://noteful-client.chrismcardle.vercel.app/']
-var corsOptions = {
-  origin: function (origin, callback) {
-    if (whitelist.indexOf(origin) !== -1) {
-      callback(null, true)
-    } else {
-      callback(new Error('Not allowed by CORS'))
-    }
-  }
-}
 
 app.use(morgan((NODE_ENV === 'production') ? 'tiny' : 'common', {
   skip: () => NODE_ENV === 'test'}));
 app.use(helmet());
-app.use(cors(corsOptions))
+app.use(cors);
 
 app.use('/api/notes', nRouter);
 app.use('/api/folders', fRouter);
