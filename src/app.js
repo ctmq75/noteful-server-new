@@ -11,12 +11,10 @@ const fRouter = require('./folders/folders-router.js');
 
 const app = express();
 
-
-
-app.use(morgan((NODE_ENV === 'production') ? 'tiny' : 'common', {
-  skip: () => NODE_ENV === 'test'}));
+const morganSetting = process.env.NODE_ENV === 'production' ? 'tiny' : 'common'
+app.use(morgan(morganSetting))
 app.use(helmet());
-app.use(cors);
+app.use(cors());
 
 app.use('/notes', nRouter);
 app.use('/folders', fRouter);
@@ -29,7 +27,7 @@ app.use(function errorHandler(error, req, res, next) {
   let response;
   if (NODE_ENV === 'production') {
     console.error(error);
-     response = { error: { message: 'server errorrrrrrr' }};
+     response = { error: { message: 'server error' }};
   } else {
     console.error(error);
     response = { error, message: error.message };
