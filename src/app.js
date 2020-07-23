@@ -11,10 +11,25 @@ const fRouter = require('./folders/folders-router.js');
 
 const app = express();
 
-app.use(morgan((NODE_ENV === 'production') ? 'tiny' : 'common', {
-  skip: () => NODE_ENV === 'test'}));
+
+var whitelist = ['http://localhost:3000', 'https://noteful-client.chrismcardle.vercel.app/']
+var corsOptions = {
+  origin: function (origin, callback) {
+    if (whitelist.indexOf(origin) !== -1) {
+      callback(null, true)
+    } else {
+      callback(new Error('Not allowed by CORS'))
+    }
+  }
+}
+
+const morganOption = (NODE_ENV === 'production')
+  ? 'tiny'
+  : 'common';
+
+app.use(morgan(morganOption))
 app.use(helmet());
-app.use(cors());
+app.use(cors(corsOptions))
 
 app.use('/api/notes', nRouter);
 app.use('/api/folders', fRouter);
@@ -27,7 +42,7 @@ app.use(function errorHandler(error, req, res, next) {
   let response;
   if (NODE_ENV === 'production') {
     console.error(error);
-     response = { error: { message: 'server error' }};
+     response = { error: { message: 'server errorrrrrrr' }};
   } else {
     console.error(error);
     response = { error, message: error.message };
